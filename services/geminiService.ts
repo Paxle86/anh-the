@@ -20,21 +20,30 @@ export const generateIdPhoto = async (
   };
 
   const prompt = `
-    TASK: Transform this person into a professional ID passport photo while strictly preserving their natural identity.
+    CRITICAL INSTRUCTION: Transform the subject into a professional ID photo with strict adherence to composition and realism.
     
-    CONSTRAINTS:
-    1. FACIAL IDENTITY: You MUST keep the person's face, features, and identity 100% IDENTICAL to the source. Do not morph or change facial structure.
-    2. SKIN TEXTURE: DO NOT perform skin smoothing (no airbrushing/blurring). Keep natural skin pores, fine lines, and texture completely intact. 
-       - ONLY remove temporary blemishes like acne or pimples. 
-       - DO NOT "cà mịn" (smooth) the skin. It must look like a real, high-resolution portrait.
-    3. BACKGROUND: Replace the background with a completely SOLID ${config.bgColor} color. No shadows, no gradients.
-    4. CLOTHING: Change the attire to a ${clothingDesc[config.clothing]}. Ensure it fits naturally on the body.
-    5. HAIR: Make the hairstyle look neat and tidy, ensuring no stray hairs are messy, but maintain the original style.
-    6. COMPOSITION: 
-       - Output aspect ratio MUST be ${selectedSize.width}:${selectedSize.height}.
-       - Zoom/Crop so that the face (from chin to top of hair) occupies approximately ${config.faceRatio}% of the total vertical height of the image.
-       - Ensure the head is centered and looking straight ahead.
-    7. OUTPUT: High-resolution, sharp, professional ID studio quality.
+    1. FACIAL IDENTITY (NON-NEGOTIABLE):
+       - The subject's face MUST remain 100% IDENTICAL to the source photo.
+       - DO NOT morph, slim, beautify, or "enhance" the facial features.
+       - The person must be immediately recognizable as the exact same person from the input.
+    
+    2. SKIN TEXTURE AND REALISM (STRICT):
+       - DO NOT SMOOTH THE SKIN. NO "cà mịn" effect. NO airbrushing or blurring.
+       - MAINTAIN NATURAL TEXTURE: Skin pores, fine lines, natural shadows, and skin character must remain visible and sharp.
+       - EXCEPTION: Only remove temporary, minor blemishes like active acne or pimples.
+    
+    3. BACKGROUND AND CLOTHING:
+       - Replace the background with a completely SOLID ${config.bgColor} color.
+       - Change the attire to a ${clothingDesc[config.clothing]}. It must fit the subject's neck and shoulders naturally.
+    
+    4. COMPOSITION AND CROP (STRICT RATIO):
+       - Target Aspect Ratio: ${selectedSize.width}:${selectedSize.height}.
+       - FACE RATIO: The face (measured from the tip of the chin to the top of the head/crown) MUST occupy exactly ${config.faceRatio}% of the TOTAL VERTICAL HEIGHT of the resulting image.
+       - POSITIONING: Center the head horizontally. Leave a balanced margin (headroom) between the top of the hair and the top edge of the photo.
+       - Ensure the subject is looking directly at the camera with a neutral expression.
+    
+    5. QUALITY:
+       - Output must be ultra-sharp, professional studio quality.
   `;
 
   try {
