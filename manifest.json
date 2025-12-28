@@ -1,8 +1,8 @@
 
 {
-  "name": "ID Photo Pro AI - Tạo Ảnh Thẻ Chuyên Nghiệp",
-  "short_name": "ID Photo AI",
-  "description": "Ứng dụng tạo ảnh thẻ chuyên nghiệp từ ảnh selfie bằng AI, hỗ trợ đổi phông nền, thay trang phục và giữ nguyên nét tự nhiên.",
+  "name": "ID Photo Pro AI - Tạo Ảnh Thẻ & Hộ Chiếu Online",
+  "short_name": "Tạo Ảnh Thẻ AI",
+  "description": "Tạo ảnh thẻ tự động chuẩn cho bằng lái xe, khám sức khỏe, hộ chiếu và hồ sơ xin việc bằng AI.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",

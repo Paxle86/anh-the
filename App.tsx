@@ -8,7 +8,12 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
   UserIcon,
-  ArrowsPointingOutIcon
+  ArrowsPointingOutIcon,
+  SparklesIcon,
+  IdentificationIcon,
+  DocumentTextIcon,
+  GlobeAltIcon,
+  BriefcaseIcon
 } from '@heroicons/react/24/outline';
 import { BACKGROUND_COLORS, CLOTHING_OPTIONS, PHOTO_SIZES } from './constants';
 import { BackgroundColor, ClothingType, GenerationConfig } from './types';
@@ -76,14 +81,14 @@ const App: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-blue-600 p-2 rounded-lg shadow-sm">
-              <CameraIcon className="w-6 h-6 text-white" />
+              <SparklesIcon className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-slate-800 tracking-tight">ID Photo <span className="text-blue-600">Pro AI</span></h1>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">
+              ID Photo <span className="text-blue-600">Pro AI</span>
+            </h1>
           </div>
           <div className="hidden md:flex items-center gap-4 text-sm font-medium text-slate-500">
-            <a href="#" className="hover:text-blue-600 transition-colors">Kích thước chuẩn</a>
-            <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-            <a href="#" className="hover:text-blue-600 transition-colors">Yêu cầu kỹ thuật</a>
+            <span className="text-blue-600 font-bold uppercase tracking-widest text-[10px]">AI-Powered Photo Engine</span>
           </div>
         </div>
       </header>
@@ -91,11 +96,20 @@ const App: React.FC = () => {
       <main className="flex-1 max-w-6xl mx-auto w-full p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Upload & Controls */}
         <div className="lg:col-span-5 space-y-6">
-          <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <PhotoIcon className="w-5 h-5 text-blue-600" />
-              1. Tải ảnh gốc
+          <div className="mb-2">
+            <h2 className="text-2xl font-extrabold text-slate-900 leading-tight">
+              Tạo ảnh thẻ tự động cho mọi loại hồ sơ
             </h2>
+            <p className="text-sm text-slate-500 mt-2">
+              Chụp ảnh tại nhà và để AI lo phần còn lại. Chuẩn ảnh lái xe, hộ chiếu và khám sức khỏe.
+            </p>
+          </div>
+
+          <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <PhotoIcon className="w-5 h-5 text-blue-600" />
+              1. Tải ảnh selfie của bạn
+            </h3>
             
             <div 
               onClick={() => fileInputRef.current?.click()}
@@ -107,7 +121,7 @@ const App: React.FC = () => {
                 <div className="relative group">
                   <img 
                     src={sourceImage} 
-                    alt="Source" 
+                    alt="Ảnh thẻ gốc" 
                     className="max-h-64 mx-auto rounded-lg shadow-md" 
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-lg transition-opacity">
@@ -120,8 +134,8 @@ const App: React.FC = () => {
                     <ArrowDownTrayIcon className="w-6 h-6 text-slate-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-700">Tải ảnh chân dung</p>
-                    <p className="text-xs text-slate-400 mt-1">Ảnh chụp rõ mặt, đủ sáng</p>
+                    <p className="text-sm font-medium text-slate-700">Tải ảnh để tạo ảnh thẻ</p>
+                    <p className="text-xs text-slate-400 mt-1">Chuẩn bị ảnh đủ sáng, nhìn thẳng</p>
                   </div>
                 </div>
               )}
@@ -136,15 +150,15 @@ const App: React.FC = () => {
           </section>
 
           <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-            <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
               <InformationCircleIcon className="w-5 h-5 text-blue-600" />
-              2. Tuỳ chỉnh thông số
-            </h2>
+              2. Cấu hình ảnh thẻ chuẩn SEO
+            </h3>
 
             <div className="space-y-6">
               {/* Target Size Selection */}
               <div>
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Kích thước ảnh đích</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Chọn kích thước (3x4, 4x6, Passport)</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PHOTO_SIZES.map((size) => (
                     <button
@@ -162,36 +176,9 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Face Ratio Selection */}
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tỷ lệ khuôn mặt</label>
-                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{config.faceRatio}%</span>
-                </div>
-                <div className="flex gap-2">
-                  {[60, 70, 80].map((ratio) => (
-                    <button
-                      key={ratio}
-                      onClick={() => setConfig(prev => ({ ...prev, faceRatio: ratio }))}
-                      className={`flex-1 py-2 rounded-lg border text-xs font-semibold transition-all ${
-                        config.faceRatio === ratio 
-                          ? 'bg-blue-600 border-blue-600 text-white' 
-                          : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
-                      }`}
-                    >
-                      {ratio === 60 ? 'Nhỏ (60%)' : ratio === 70 ? 'Vừa (70%)' : 'Lớn (80%)'}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-[10px] text-slate-400 mt-2 italic flex items-center gap-1">
-                  <ArrowsPointingOutIcon className="w-3 h-3" />
-                  Kích thước đầu so với tổng chiều cao ảnh thẻ
-                </p>
-              </div>
-
               {/* Background Selection */}
               <div>
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Màu phông nền</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Phông nền theo quy định</label>
                 <div className="flex gap-4">
                   {BACKGROUND_COLORS.map((bg) => (
                     <button
@@ -210,7 +197,7 @@ const App: React.FC = () => {
 
               {/* Clothing Selection */}
               <div>
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Trang phục</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-3">Trang phục chuyên nghiệp</label>
                 <div className="grid grid-cols-3 gap-2">
                   {CLOTHING_OPTIONS.map((cloth) => (
                     <button
@@ -239,49 +226,43 @@ const App: React.FC = () => {
                 {isGenerating ? (
                   <>
                     <ArrowPathIcon className="w-5 h-5 animate-spin" />
-                    Đang thiết kế...
+                    AI đang xử lý tự động...
                   </>
                 ) : (
                   <>
                     <CheckCircleIcon className="w-5 h-5" />
-                    Tạo ảnh thẻ {selectedSize?.label}
+                    Bắt đầu tạo ảnh {selectedSize?.label}
                   </>
                 )}
               </button>
-              
-              {error && (
-                <div className="p-3 bg-red-50 text-red-600 text-xs rounded-lg border border-red-100">
-                  {error}
-                </div>
-              )}
             </div>
           </section>
         </div>
 
-        {/* Right Column: Results Gallery */}
+        {/* Right Column: Results & Guides */}
         <div className="lg:col-span-7 space-y-6">
           <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 min-h-[500px] flex flex-col">
-            <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
               <UserIcon className="w-5 h-5 text-green-600" />
-              Kết quả ảnh thẻ AI
-            </h2>
+              Kết quả ảnh thẻ AI chất lượng Studio
+            </h3>
 
             {!resultImage ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 p-8">
+              <div className="flex-1 flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
-                  <PhotoIcon className="w-8 h-8 opacity-20" />
+                  <SparklesIcon className="w-8 h-8 text-blue-300" />
                 </div>
-                <p className="text-sm font-medium">Chọn các tuỳ chọn và bấm "Tạo ảnh thẻ"</p>
-                <p className="text-xs mt-1 text-center max-w-xs">AI sẽ phân tích ảnh gốc, đổi phông nền, trang phục và cắt theo kích thước chuẩn.</p>
+                <p className="text-sm font-medium">Tự động hoá ảnh thẻ chuyên nghiệp</p>
+                <p className="text-xs mt-2 text-slate-400 max-w-sm">
+                  Công nghệ AI giúp tạo ảnh thẻ lái xe, hộ chiếu và hồ sơ đạt chuẩn quy định của cơ quan nhà nước.
+                </p>
               </div>
             ) : (
               <div className="space-y-8 animate-in fade-in duration-700">
-                {/* Master Preview */}
                 <div className="flex flex-col items-center">
-                  <div className="relative inline-block group">
-                    <div className="absolute inset-0 bg-blue-600 blur-2xl opacity-10 rounded-full"></div>
+                  <div className="relative inline-block">
                     <div 
-                       className="relative shadow-2xl border-8 border-white rounded shadow-blue-900/10 overflow-hidden"
+                       className="relative shadow-2xl border-8 border-white rounded overflow-hidden"
                        style={{
                          aspectRatio: `${selectedSize?.width}/${selectedSize?.height}`,
                          maxHeight: '400px'
@@ -289,72 +270,100 @@ const App: React.FC = () => {
                     >
                       <img 
                         src={resultImage} 
-                        alt="Result Master" 
+                        alt={`Ảnh thẻ ${selectedSize?.label} tự động`} 
                         className="h-full w-auto object-cover" 
                       />
-                    </div>
-                    <div className="absolute -top-3 -right-3 bg-green-500 text-white p-2 rounded-full shadow-lg border-2 border-white">
-                      <CheckCircleIcon className="w-6 h-6" />
                     </div>
                   </div>
                   
                   <div className="mt-6 text-center">
-                     <p className="text-lg font-bold text-slate-800">{selectedSize?.label}</p>
-                     <p className="text-xs text-slate-400">Kích thước chuẩn: {selectedSize?.mmWidth}mm x {selectedSize?.mmHeight}mm</p>
+                     <p className="text-lg font-bold text-slate-800">Ảnh {selectedSize?.label} đã sẵn sàng</p>
+                     <p className="text-xs text-slate-400 uppercase tracking-widest font-bold mt-1">High-Resolution Output</p>
                   </div>
 
                   <button 
-                    onClick={() => downloadImage(resultImage, selectedSize?.label || 'result')}
-                    className="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-md transition-all flex items-center gap-2"
+                    onClick={() => downloadImage(resultImage, selectedSize?.label || 'anh-the-ai')}
+                    className="mt-4 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-bold shadow-md transition-all flex items-center gap-2"
                   >
                     <ArrowDownTrayIcon className="w-5 h-5" />
-                    Tải về máy
+                    Tải ảnh thẻ chuẩn SEO
                   </button>
                 </div>
-
                 <hr className="border-slate-100" />
-
-                {/* Grid Preview Simulation */}
-                <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Bản in khổ 10x15cm</p>
-                    <button 
-                      onClick={() => window.print()}
-                      className="text-xs font-bold text-blue-600 hover:underline"
-                    >
-                      In ngay
-                    </button>
-                  </div>
-                  <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 grid grid-cols-4 gap-3">
-                    {Array.from({ length: 8 }).map((_, i) => (
-                      <div key={i} className="shadow-[0_2px_5px_rgba(0,0,0,0.1)] bg-white overflow-hidden" style={{ aspectRatio: `${selectedSize?.width}/${selectedSize?.height}` }}>
-                        <img src={resultImage} className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-3 text-center italic">Minh họa cách sắp xếp trên giấy in ảnh chuyên dụng</p>
-                </div>
               </div>
             )}
           </section>
+
+          {/* New Section for Purpose Guidance (SEO Optimized) */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-2">
+              <IdentificationIcon className="w-6 h-6 text-blue-500 mx-auto" />
+              <p className="text-[10px] font-bold text-slate-800">ẢNH BẰNG LÁI XE</p>
+              <p className="text-[9px] text-slate-400">Chuẩn 3x4 hoặc 4x6 nền xanh/trắng</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-2">
+              <DocumentTextIcon className="w-6 h-6 text-emerald-500 mx-auto" />
+              <p className="text-[10px] font-bold text-slate-800">ẢNH KHÁM SỨC KHOẺ</p>
+              <p className="text-[9px] text-slate-400">Chuẩn 4x6 nền trắng sắc nét</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-2">
+              <GlobeAltIcon className="w-6 h-6 text-purple-500 mx-auto" />
+              <p className="text-[10px] font-bold text-slate-800">ẢNH HỘ CHIẾU</p>
+              <p className="text-[9px] text-slate-400">Chuẩn Passport 4x6 quốc tế</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 text-center space-y-2">
+              <BriefcaseIcon className="w-6 h-6 text-orange-500 mx-auto" />
+              <p className="text-[10px] font-bold text-slate-800">ẢNH HỒ SƠ XIN VIỆC</p>
+              <p className="text-[9px] text-slate-400">Chỉnh chu với vest và sơ mi AI</p>
+            </div>
+          </div>
           
-          <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl flex gap-3">
-             <InformationCircleIcon className="w-6 h-6 text-amber-500 shrink-0" />
-             <div className="text-sm text-amber-900">
-                <p className="font-bold mb-1">Ghi chú về chất lượng:</p>
-                <p className="text-xs opacity-90 leading-relaxed">
-                   AI sẽ giữ nguyên <b>từng đặc điểm khuôn mặt</b> và <b>kết cấu da tự nhiên</b> (không làm mịn da). 
-                   Chỉ các khuyết điểm tạm thời như mụn sẽ được xử lý để ảnh thẻ trông chuyên nghiệp nhất.
-                </p>
+          <div className="bg-blue-600 p-6 rounded-2xl text-white">
+             <h4 className="font-bold mb-3 flex items-center gap-2">
+               <SparklesIcon className="w-5 h-5 text-blue-200" />
+               Ưu điểm của tạo ảnh thẻ tự động AI
+             </h4>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs opacity-90">
+                <div className="flex gap-2">
+                   <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center shrink-0">✓</div>
+                   <p><b>Tạo ảnh thẻ lái xe:</b> Đáp ứng chuẩn phông nền và kích thước của Bộ Giao thông.</p>
+                </div>
+                <div className="flex gap-2">
+                   <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center shrink-0">✓</div>
+                   <p><b>Tạo ảnh thẻ khám sức khỏe:</b> Tự động xử lý ánh sáng chuẩn phòng chụp Studio.</p>
+                </div>
+                <div className="flex gap-2">
+                   <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center shrink-0">✓</div>
+                   <p><b>Tạo ảnh hộ chiếu online:</b> Tỷ lệ khuôn mặt 70-80% chuẩn ICAO quốc tế.</p>
+                </div>
+                <div className="flex gap-2">
+                   <div className="w-5 h-5 bg-blue-500 rounded flex items-center justify-center shrink-0">✓</div>
+                   <p><b>Tạo ảnh hồ sơ CV:</b> Trang phục lịch sự giúp bạn ghi điểm với nhà tuyển dụng.</p>
+                </div>
              </div>
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-8 mt-12">
+      {/* Footer with SEO Keywords */}
+      <footer className="bg-white border-t border-slate-200 py-12 mt-12">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-slate-400 text-sm">© 2024 ID Photo Pro AI. Nâng tầm ảnh thẻ bằng Trí tuệ nhân tạo.</p>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Danh mục tạo ảnh thẻ chuyên dụng</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-8 text-xs font-medium text-slate-500">
+            <span className="hover:text-blue-600 cursor-default">Tạo ảnh thẻ tự động AI</span>
+            <span className="hover:text-blue-600 cursor-default">Tạo ảnh thẻ lái xe online</span>
+            <span className="hover:text-blue-600 cursor-default">Tạo ảnh thẻ khám sức khoẻ</span>
+            <span className="hover:text-blue-600 cursor-default">Tạo ảnh hộ chiếu (Passport)</span>
+            <span className="hover:text-blue-600 cursor-default">Tạo ảnh hồ sơ xin việc (CV)</span>
+            <span className="hover:text-blue-600 cursor-default">Làm ảnh thẻ 3x4 miễn phí</span>
+            <span className="hover:text-blue-600 cursor-default">Chỉnh sửa ảnh thẻ online</span>
+          </div>
+          <div className="pt-8 border-t border-slate-100">
+            <p className="text-slate-400 text-[10px] leading-relaxed">
+              ID Photo Pro AI - Nền tảng tạo ảnh thẻ tự động hàng đầu. Chúng tôi cung cấp giải pháp làm ảnh thẻ lái xe, khám sức khỏe, hộ chiếu chuẩn SEO và thẩm mỹ cao nhất.<br/>
+              © 2024 AI Vision Lab. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
