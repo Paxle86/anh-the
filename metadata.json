@@ -1,0 +1,7 @@
+{
+  "name": "Copy of ID Photo Pro AI",
+  "description": "Ứng dụng tạo ảnh thẻ chuyên nghiệp từ ảnh selfie, hỗ trợ đổi phông nền, thay trang phục công sở và xuất nhiều kích thước (3x4, 4x6, 3.5x4.5).",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
